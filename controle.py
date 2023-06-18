@@ -2,16 +2,19 @@ from PyQt6 import uic, QtWidgets
 import mysql.connector
 import datetime
 
+#Conexão com banco de dados
 cnx = mysql.connector.connect(user='root', password='',
                               host='localhost',
                               database='lista_de_tarefas')
 
 cursor = cnx.cursor()
 
+#Iniciando primeira tela
 def chama_primeira_tela():
     cadastro.show()
     inicial.close()
 
+#Funções da Tela de Cadastro
 def cadastrar_tarefa():
     linha1 = cadastro.lineEdit.text()
     linha2 = cadastro.lineEdit_2.text()
@@ -38,6 +41,7 @@ def cadastrar_tarefa():
     cadastro.lineEdit.setText("")
     cadastro.lineEdit_2.setText("")
 
+#função que chama segunda tela com a lista das tarefas
 def chama_segunda_tela():
     cadastro.hide()
     segunda_tela.show()
@@ -52,6 +56,7 @@ def chama_segunda_tela():
         for j in range(0, 6):
             segunda_tela.tableWidget.setItem(i, j, QtWidgets.QTableWidgetItem(str(dados_lidos[i][j])))
 
+#função para deletar dados da lista
 def excluir_dados():
     linha = segunda_tela.tableWidget.currentRow()
     if linha >= 0:
@@ -63,6 +68,7 @@ def excluir_dados():
         cursor.execute("DELETE FROM tarefas WHERE id=" + str(valor_id))
         cnx.commit()
 
+#função do botão editar lista
 def editar_dados():
     global numero_id
 
@@ -82,9 +88,11 @@ def editar_dados():
 
     numero_id = valor_id
 
+#função do botão exibir
 def cadastro_exibir():
     cadastro.show()
 
+#função de atualizar tarefa
 def atualizar_tarefa():
     global numero_id
 
@@ -103,11 +111,15 @@ def atualizar_tarefa():
     segunda_tela.close()
     chama_segunda_tela()
 
+#Chamadas de cada arquivo para tela correspondente
 app = QtWidgets.QApplication([])
 inicial = uic.loadUi("inicial.ui")
 cadastro = uic.loadUi("tela_cadastro.ui")
 segunda_tela = uic.loadUi("listar_dados.ui")
 tela_editar = uic.loadUi("menu_editar.ui")
+
+
+#Funções de botões do Pyqt6
 inicial.pushButton.clicked.connect(chama_primeira_tela)
 cadastro.pushButton.clicked.connect(cadastrar_tarefa)
 cadastro.pushButton_2.clicked.connect(chama_segunda_tela)
@@ -119,10 +131,3 @@ tela_editar.pushButton.clicked.connect(atualizar_tarefa)
 inicial.show()
 app.exec()
 
-"""Trabalho de Crud 
-Front-END : Maria Cecilia
-Back-END: Thiago Guimarães
-
-Integração: Jesus fez pq nenhum dos dois sabe como aconteceu
-
-"""
