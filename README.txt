@@ -30,7 +30,7 @@ Configuração do banco de dados:
 
 Certifique-se de ter o MySQL instalado e em execução.
 Crie um novo banco de dados no MySQL com o nome "lista_de_tarefas".
-No arquivo main.py, atualize as credenciais de conexão ao banco de dados (user, password, host) conforme necessário.
+No arquivo Controle.py, atualize as credenciais de conexão ao banco de dados (user, password, host) conforme necessário.
 
 
 Funcionalidades
